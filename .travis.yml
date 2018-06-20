@@ -4,4 +4,4 @@ jdk:
   - oraclejdk8
 
 install:
-    cd sample-coding && mvn test
+    mvn test
