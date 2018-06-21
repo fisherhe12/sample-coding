@@ -1,15 +1,22 @@
 package com.github.fisherhe12.zk;
 
+import com.google.common.collect.Lists;
 import org.apache.zookeeper.*;
+import org.apache.zookeeper.data.ACL;
+import org.apache.zookeeper.data.Id;
 import org.apache.zookeeper.data.Stat;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import sun.security.x509.IPAddressName;
 
 import java.io.IOException;
+import java.security.acl.Acl;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.zip.ZipEntry;
 
 /**
  * Zookeeper 原生客户端一些常用操作
@@ -18,7 +25,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ZkClientTest {
 
-	private static final String IP_ADDRESS = "116.196.99.138:2181";
+	private static final String IP_ADDRESS = "172.18.8.20:2181";
 	private static ZooKeeper zooKeeper;
 	private static CountDownLatch connectedSemaphore = new CountDownLatch(1);
 	private static Stat stat = new Stat();
@@ -95,6 +102,32 @@ public class ZkClientTest {
 		zooKeeper.setData("/book", "many many books".getBytes(), -1);
 
 		TimeUnit.SECONDS.sleep(5);
+	}
+
+	@Test
+	public void auth() {
+		try {
+			ZooKeeper zooKeeper = new ZooKeeper(IP_ADDRESS, 5000, new InitWatcher());
+			ACL acl = new ACL(ZooDefs.Perms.CREATE, new Id("digest", "root:root"));
+			ACL acl1 = new ACL(ZooDefs.Perms.CREATE, new Id("ip", "127.0.0.1"));
+
+			ArrayList<ACL> acls = Lists.newArrayList(acl,acl1);
+
+			zooKeeper.create("/user", "1".getBytes(), acls, CreateMode.EPHEMERAL);
+			zooKeeper.addAuthInfo("digest", "root:root".getBytes());
+
+			zooKeeper.create("/user", "1".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
+
+			byte[] data = zooKeeper.getData("/user", true, stat);
+			System.out.println(new String(data));
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (KeeperException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@After
