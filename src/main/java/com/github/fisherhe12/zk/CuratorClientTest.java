@@ -20,43 +20,53 @@ import java.util.concurrent.Executors;
  * @author fisher
  */
 public class CuratorClientTest {
-	private static final String IP_ADDRESS = "116.196.99.138:2181";
+	private static final String IP_ADDRESS = "172.18.8.20:2181";
 	private CuratorFramework curatorFramework;
 
 	@Before
 	public void init() {
-		curatorFramework = CuratorFrameworkFactory.builder().connectString(IP_ADDRESS).sessionTimeoutMs(5000)
-				.retryPolicy(new ExponentialBackoffRetry(1000, 3)).namespace("/test").build();
+		curatorFramework = CuratorFrameworkFactory.builder()
+				.connectString(IP_ADDRESS)
+				.sessionTimeoutMs(5000)
+				.retryPolicy(new ExponentialBackoffRetry(1000, 3))
+				.namespace("root")
+				.build();
 		curatorFramework.start();
 	}
 
 	@Test
 	public void crud() throws Exception {
 		String result = curatorFramework.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL)
-				.forPath("/book/java/zk", "test".getBytes());
+				.forPath("/book/java/zk", "curator".getBytes());
 		System.out.println(result);
 
 		List<String> list = curatorFramework.getChildren().forPath("/book");
 		for (String s : list) {
 			System.out.println(s);
 		}
+		Stat stat1 = curatorFramework.setData().forPath("/book/java/zk", "curator->update first".getBytes());
+		curatorFramework.setData().withVersion(1).forPath("/book/java/zk","curator->update second".getBytes());
+		System.out.println(stat1);
+
 		Stat stat = new Stat();
 		byte[] bytes = curatorFramework.getData().storingStatIn(stat).forPath("/book/java/zk");
 		System.out.println(new String(bytes));
 
-		curatorFramework.delete().deletingChildrenIfNeeded().forPath("/book");
+		curatorFramework.delete().guaranteed().deletingChildrenIfNeeded().forPath("/book");
+
 	}
 
 	@Test
 	public void crudAsync() {
 		ExecutorService executorService = Executors.newFixedThreadPool(1);
 		try {
-			curatorFramework.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL)
-					.inBackground((client, event) -> {
-						System.out.println(
-								Thread.currentThread().getName() + "->resultCode:" + event.getResultCode() + "->"
-										+ event.getType());
-					}, executorService).forPath("/node", "123".getBytes());
+			curatorFramework.create().
+					creatingParentsIfNeeded().
+					withMode(CreateMode.EPHEMERAL).
+					inBackground((client, event) -> System.out.println(
+							Thread.currentThread().getName() + "->resultCode:" + event.getResultCode() + "->" + event
+									.getType()), executorService).
+					forPath("/node", "123".getBytes());
 
 
 		} catch (Exception e) {
