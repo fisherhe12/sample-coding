@@ -16,6 +16,8 @@ import java.util.concurrent.Executors;
 
 /**
  * Curator进行Zookeeper操作
+ *
+ * @author fisher
  */
 public class CuratorClientTest {
 	private static final String IP_ADDRESS = "116.196.99.138:2181";
