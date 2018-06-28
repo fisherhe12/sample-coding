@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author fisher
  */
-public class ZookeperClientTest {
+public class ZookeeperClientTest {
 
 	private static final String IP_ADDRESS = "172.18.8.20:2183";
 	private static ZooKeeper zooKeeper;
