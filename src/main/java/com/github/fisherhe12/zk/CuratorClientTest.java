@@ -2,6 +2,8 @@ package com.github.fisherhe12.zk;
 
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
+import org.apache.curator.framework.api.transaction.CuratorOp;
+import org.apache.curator.framework.api.transaction.CuratorTransactionResult;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.data.Stat;
@@ -15,22 +17,18 @@ import java.util.concurrent.Executors;
 
 
 /**
- * Curator进行Zookeeper操作
+ * Curator客戶端进行Zookeeper操作
  *
  * @author fisher
  */
 public class CuratorClientTest {
 	private static final String IP_ADDRESS = "172.18.8.20:2181";
-	private CuratorFramework curatorFramework;
+	private CuratorFramework  curatorFramework;
 
 	@Before
 	public void init() {
-		curatorFramework = CuratorFrameworkFactory.builder()
-				.connectString(IP_ADDRESS)
-				.sessionTimeoutMs(5000)
-				.retryPolicy(new ExponentialBackoffRetry(1000, 3))
-				.namespace("root")
-				.build();
+		curatorFramework = CuratorFrameworkFactory.builder().connectString(IP_ADDRESS).sessionTimeoutMs(5000)
+				.retryPolicy(new ExponentialBackoffRetry(1000, 3)).namespace("root").build();
 		curatorFramework.start();
 	}
 
@@ -45,7 +43,7 @@ public class CuratorClientTest {
 			System.out.println(s);
 		}
 		Stat stat1 = curatorFramework.setData().forPath("/book/java/zk", "curator->update first".getBytes());
-		curatorFramework.setData().withVersion(1).forPath("/book/java/zk","curator->update second".getBytes());
+		curatorFramework.setData().withVersion(1).forPath("/book/java/zk", "curator->update second".getBytes());
 		System.out.println(stat1);
 
 		Stat stat = new Stat();
@@ -77,13 +75,23 @@ public class CuratorClientTest {
 	}
 
 	@Test
-	public void transaction() {
+	public void transactionOps() {
 		try {
+			CuratorOp createOp = curatorFramework.transactionOp().create().forPath("/book", "java".getBytes());
+			CuratorOp setDataOp = curatorFramework.transactionOp().setData().forPath("/book/java", "python".getBytes());
+			CuratorOp deleteOp = curatorFramework.transactionOp().delete().forPath("/book");
+			List<CuratorTransactionResult> curatorTransactionResults = curatorFramework.transaction()
+					.forOperations(createOp,setDataOp,deleteOp);
+			for (CuratorTransactionResult result : curatorTransactionResults) {
+				System.out.println(result.getForPath() + " - " + result.getType());
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
+
 
 	@After
 	public void close() {
