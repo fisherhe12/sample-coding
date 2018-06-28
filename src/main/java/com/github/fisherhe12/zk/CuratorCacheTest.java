@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author fisher
  */
-public class CuratorEventTest {
+public class CuratorCacheTest {
 
 	private static final String IP_ADDRESS = "172.18.8.20:2181";
 	private CuratorFramework curatorFramework;
