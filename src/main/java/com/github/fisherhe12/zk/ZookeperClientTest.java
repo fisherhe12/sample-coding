@@ -15,9 +15,8 @@ import java.util.concurrent.TimeUnit;
  * Zookeeper 客户端一些常用操作
  *
  * @author fisher
- * @date 2018-06-20
  */
-public class ZkClientTest {
+public class ZookeperClientTest {
 
 	private static final String IP_ADDRESS = "172.18.8.20:2183";
 	private static ZooKeeper zooKeeper;
