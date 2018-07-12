@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class MasterSelectorTest {
 
-	private static final String IP_ADDRESS = "116.196.99.138:2181";
+	private static final String IP_ADDRESS = "172.18.8.20:2181";
 	private static final String MASTER_SELECTOR_PATH = "/master-selector";
 	private CuratorFramework curatorFramework;
 

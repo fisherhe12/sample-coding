@@ -21,7 +21,7 @@ import java.util.concurrent.CountDownLatch;
  */
 public class DistributedLockTest {
 
-	private static final String IP_ADDRESS = "116.196.99.138:2181";
+	private static final String IP_ADDRESS = "172.18.8.20:2181";
 	private static final String LOCK_PATH = "/myLock";
 	private CuratorFramework curatorFramework;
 

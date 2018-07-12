@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2018-07-09
  */
 public class CyclicBarrierTest {
-	private static final String IP_ADDRESS = "116.196.99.138:2181";
+	private static final String IP_ADDRESS = "172.18.8.20:2181";
 	private static final String CYCLIC_BARRIER_PATH = "/cyclic-barrier";
 
 	@Test
