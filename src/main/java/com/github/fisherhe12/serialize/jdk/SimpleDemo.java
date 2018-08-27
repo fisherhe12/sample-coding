@@ -11,19 +11,20 @@ import java.io.*;
  */
 public class SimpleDemo {
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        ObjectOutputStream oo = new ObjectOutputStream(new FileOutputStream(new File("person")));
+	public static void main(String[] args) throws IOException, ClassNotFoundException {
+		ObjectOutputStream oo = new ObjectOutputStream(new FileOutputStream(new File("person")));
 
-        PersonDTO personDTO = new PersonDTO("fisher", 22);
-        oo.writeObject(personDTO);
+		PersonDTO personDTO = new PersonDTO("fisher", 22);
+		oo.writeObject(personDTO);
 
-        oo.close();
+		oo.close();
 
-        ObjectInputStream oi = new ObjectInputStream(new FileInputStream(new File("person")));
-        PersonDTO person = (PersonDTO) oi.readObject();
-        System.out.println(person);
-        System.out.println(person.index);
-        oi.close();
+		ObjectInputStream oi = new ObjectInputStream(new FileInputStream(new File("person")));
+		PersonDTO person = (PersonDTO) oi.readObject();
+		System.out.println(person);
+		System.out.println(person.index);
+		oi.close();
 
-    }
+	}
+
 }
