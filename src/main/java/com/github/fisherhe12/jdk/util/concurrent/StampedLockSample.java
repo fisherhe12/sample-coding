@@ -1,4 +1,4 @@
-package com.github.fisherhe12.concurrent;
+package com.github.fisherhe12.jdk.util.concurrent;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;

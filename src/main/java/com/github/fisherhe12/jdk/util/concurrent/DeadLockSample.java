@@ -1,4 +1,4 @@
-package com.github.fisherhe12.concurrent;
+package com.github.fisherhe12.jdk.util.concurrent;
 
 /**
  * 一个经典的死锁的例子

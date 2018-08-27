@@ -1,4 +1,4 @@
-package com.github.fisherhe12.concurrent;
+package com.github.fisherhe12.jdk.util.concurrent;
 
 /**
  * 锁消除的例子

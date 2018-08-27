@@ -1,4 +1,4 @@
-package com.github.fisherhe12.concurrent;
+package com.github.fisherhe12.jdk.util.concurrent;
 
 import com.google.common.primitives.Ints;
 import org.apache.commons.lang3.RandomUtils;

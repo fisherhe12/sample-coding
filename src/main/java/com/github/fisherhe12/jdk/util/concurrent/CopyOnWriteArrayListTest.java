@@ -1,4 +1,4 @@
-package com.github.fisherhe12.concurrent;
+package com.github.fisherhe12.jdk.util.concurrent;
 
 import org.junit.Test;
 
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * com.github.fisherhe12.concurrent
+ * com.github.fisherhe12.jdk.util.bit.concurrent
  *
  * @author fisher
  */
