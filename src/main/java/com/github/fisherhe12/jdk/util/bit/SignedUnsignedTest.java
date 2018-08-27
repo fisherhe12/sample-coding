@@ -1,4 +1,4 @@
-package com.github.fisherhe12.jdk.bit;
+package com.github.fisherhe12.jdk.util.bit;
 
 
 /**

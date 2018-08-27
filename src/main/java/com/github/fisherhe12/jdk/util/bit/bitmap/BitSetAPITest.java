@@ -1,4 +1,4 @@
-package com.github.fisherhe12.jdk.bitmap;
+package com.github.fisherhe12.jdk.util.bit.bitmap;
 
 import java.util.BitSet;
 

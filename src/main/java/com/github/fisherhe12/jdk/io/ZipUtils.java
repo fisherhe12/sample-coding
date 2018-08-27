@@ -1,4 +1,4 @@
-package com.github.fisherhe12.io;
+package com.github.fisherhe12.jdk.io;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -36,7 +36,7 @@ public class ZipUtils {
 			long end = System.currentTimeMillis();
 			System.out.println("压缩完成，耗时：" + (end - start) + " ms");
 		} catch (Exception e) {
-			throw new RuntimeException("zip error from com.github.fisherhe12.io.ZipUtils", e);
+			throw new RuntimeException("zip error from ZipUtils", e);
 		} finally {
 			if (zos != null) {
 				try {
@@ -74,7 +74,7 @@ public class ZipUtils {
 			long end = System.currentTimeMillis();
 			System.out.println("压缩完成，耗时：" + (end - start) + " ms");
 		} catch (Exception e) {
-			throw new RuntimeException("zip error from com.github.fisherhe12.io.ZipUtils", e);
+			throw new RuntimeException("zip error from ZipUtils", e);
 		} finally {
 			if (zos != null) {
 				try {
