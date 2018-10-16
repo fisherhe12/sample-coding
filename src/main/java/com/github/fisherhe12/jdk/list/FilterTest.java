@@ -44,7 +44,7 @@ class FilterTest {
 
 	/**
 	 * filter->map
-	 * 自定义转换元素返回
+	 * 过滤了元素之后并封装自定义返回
 	 */
 	@Test
 	void filterToMap() {
