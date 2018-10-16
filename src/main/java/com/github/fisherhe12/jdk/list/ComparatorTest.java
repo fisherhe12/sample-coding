@@ -41,7 +41,7 @@ class ComparatorTest {
 		List<PersonDTO> personDTOList = getPersonDTOS();
 
 		personDTOList.sort((PersonDTO o1, PersonDTO o2) -> o2.getAge() - o1.getAge());
-		personDTOList.forEach(personDTO -> System.out.println(personDTO));
+		personDTOList.forEach(System.out::println);
 	}
 
 	private List<PersonDTO> getPersonDTOS() {
@@ -58,7 +58,7 @@ class ComparatorTest {
 		Comparator<PersonDTO> byNameReference = Comparator.comparing(PersonDTO::getName);
 		List<PersonDTO> personDTOS = getPersonDTOS();
 		personDTOS.sort(byNameReference.reversed());
-		personDTOS.forEach(personDTO -> System.out.println(personDTO));
+		personDTOS.forEach(System.out::println);
 
 	}
 }

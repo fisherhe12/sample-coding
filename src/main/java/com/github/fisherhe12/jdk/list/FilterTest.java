@@ -31,7 +31,7 @@ class FilterTest {
 	/**
 	 * filter过滤的进阶用法
 	 * 1.findAny()查询匹配的一个元素
-	 * 2.如果没有找到匹配的元素,orElse()指定返回一个值
+	 * 2.如果没有找到匹配的元素,orElse()指定返回一个指定元素
 	 */
 	@Test
 	void filterOne() {
@@ -42,6 +42,10 @@ class FilterTest {
 		Assertions.assertEquals(result1.getName(), "jack");
 	}
 
+	/**
+	 * filter->map
+	 * 自定义转换元素返回
+	 */
 	@Test
 	void filterToMap() {
 		List<PersonDTO> personDTOS = getPersonDTOS();
