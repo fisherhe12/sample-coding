@@ -49,6 +49,10 @@ class FilterTest {
 	@Test
 	void filterToMap() {
 		List<PersonDTO> personDTOS = getPersonDTOS();
+		List<String> resultList = personDTOS.stream().map(personDTO -> personDTO.getName())
+				.collect(Collectors.toList());
+		resultList.forEach(System.out::println);
+
 		String personName = personDTOS.stream().filter(personDTO -> "jack".equals(personDTO.getName()))
 				.map(PersonDTO::getName).findAny().orElse(null);
 		Assertions.assertEquals(personName, "jack");
@@ -56,6 +60,6 @@ class FilterTest {
 	}
 
 	private List<PersonDTO> getPersonDTOS() {
-		return Arrays.asList(new PersonDTO("mkyong", 30), new PersonDTO("jack", 20), new PersonDTO("lawrence", 40));
+		return Arrays.asList(new PersonDTO("fisher", 30), new PersonDTO("jack", 20), new PersonDTO("lawrence", 40));
 	}
 }
