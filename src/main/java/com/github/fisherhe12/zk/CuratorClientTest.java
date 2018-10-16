@@ -7,9 +7,9 @@ import org.apache.curator.framework.api.transaction.CuratorTransactionResult;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.data.Stat;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -21,19 +21,19 @@ import java.util.concurrent.Executors;
  *
  * @author fisher
  */
-public class CuratorClientTest {
+class CuratorClientTest {
 	private static final String IP_ADDRESS = "172.18.8.20:2181";
 	private CuratorFramework  curatorFramework;
 
-	@Before
-	public void init() {
+	@BeforeEach
+	void init() {
 		curatorFramework = CuratorFrameworkFactory.builder().connectString(IP_ADDRESS).sessionTimeoutMs(5000)
 				.retryPolicy(new ExponentialBackoffRetry(1000, 3)).namespace("root").build();
 		curatorFramework.start();
 	}
 
 	@Test
-	public void crud() throws Exception {
+	void crud() throws Exception {
 		String result = curatorFramework.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL)
 				.forPath("/book/java/zk", "curator".getBytes());
 		System.out.println(result);
@@ -55,7 +55,7 @@ public class CuratorClientTest {
 	}
 
 	@Test
-	public void crudAsync() {
+	void crudAsync() {
 		ExecutorService executorService = Executors.newFixedThreadPool(1);
 		try {
 			curatorFramework.create().
@@ -75,7 +75,7 @@ public class CuratorClientTest {
 	}
 
 	@Test
-	public void transactionOps() {
+	void transactionOps() {
 		try {
 			CuratorOp createOp = curatorFramework.transactionOp().create().forPath("/book", "java".getBytes());
 			CuratorOp setDataOp = curatorFramework.transactionOp().setData().forPath("/book/java", "python".getBytes());
@@ -93,8 +93,8 @@ public class CuratorClientTest {
 
 
 
-	@After
-	public void close() {
+	@AfterEach
+	void close() {
 		curatorFramework.close();
 	}
 

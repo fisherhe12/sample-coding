@@ -1,6 +1,7 @@
 package com.github.fisherhe12.jdk.reflect;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Proxy;
 
@@ -8,10 +9,10 @@ import java.lang.reflect.Proxy;
  * 动态代理模式演示
  * @author fisher
  */
-public class DynamicProxyTest {
+class DynamicProxyTest {
 
 	@Test
-	public void testDynamicProxy() {
+	void testDynamicProxy() {
 		HelloImpl helloImpl = new HelloImpl();
 		HelloinvocationHandler handler = new HelloinvocationHandler(helloImpl);
 		//构造代码示例

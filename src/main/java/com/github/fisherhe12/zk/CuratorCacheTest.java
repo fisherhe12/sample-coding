@@ -8,9 +8,9 @@ import org.apache.curator.framework.recipes.cache.TreeCache;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.curator.utils.CloseableUtils;
 import org.apache.zookeeper.CreateMode;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -32,15 +32,15 @@ public class CuratorCacheTest {
 	private static final String IP_ADDRESS = "172.18.8.20:2181";
 	private CuratorFramework curatorFramework;
 
-	@Before
-	public void init() {
+	@BeforeEach
+	void init() {
 		curatorFramework = CuratorFrameworkFactory.builder().connectString(IP_ADDRESS).sessionTimeoutMs(5000)
 				.retryPolicy(new ExponentialBackoffRetry(1000, 3)).namespace("root").build();
 		curatorFramework.start();
 	}
 
 	@Test
-	public void nodeCacheOps() throws Exception {
+	void nodeCacheOps() throws Exception {
 		NodeCache nodeCache = new NodeCache(curatorFramework, "/book/", false);
 		nodeCache.start();
 		nodeCache.getListenable().addListener(() -> System.out
@@ -54,7 +54,7 @@ public class CuratorCacheTest {
 	}
 
 	@Test
-	public void pathCacheOps() throws Exception {
+	void pathCacheOps() throws Exception {
 		PathChildrenCache pathChildrenCache = new PathChildrenCache(curatorFramework, "/book", false);
 		//TODO 验证一下StartMode类型
 		pathChildrenCache.start(PathChildrenCache.StartMode.POST_INITIALIZED_EVENT);
@@ -92,7 +92,7 @@ public class CuratorCacheTest {
 	}
 
 	@Test
-	public void treeCache() throws Exception {
+	void treeCache() throws Exception {
 		TreeCache cache = TreeCache.newBuilder(curatorFramework, "/").setCacheData(false).build();
 		cache.getListenable().addListener((client, event) -> {
 			if ( event.getData() != null )
@@ -112,8 +112,8 @@ public class CuratorCacheTest {
 	}
 
 
-	@After
-	public void close() {
+	@AfterEach
+	void close() {
 		CloseableUtils.closeQuietly(curatorFramework);
 	}
 

@@ -4,7 +4,7 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.barriers.DistributedDoubleBarrier;
 import org.apache.curator.retry.ExponentialBackoffRetry;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.TimeUnit;
 
@@ -13,12 +13,12 @@ import java.util.concurrent.TimeUnit;
  * @author fisher
  * @date 2018-07-09
  */
-public class CyclicBarrierTest {
+class CyclicBarrierTest {
 	private static final String IP_ADDRESS = "172.18.8.20:2181";
 	private static final String CYCLIC_BARRIER_PATH = "/cyclic-barrier";
 
 	@Test
-	public void cyclic() throws Exception {
+	void cyclic() throws Exception {
 		for (int i = 0; i < 5; i++) {
 			new Thread(() -> {
 				try {

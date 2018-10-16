@@ -1,7 +1,7 @@
 package com.github.fisherhe12.apache.commons.lang3;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * RandomString utils Test case
@@ -10,9 +10,9 @@ import org.junit.Test;
  * @date 2018-01-25
  * @see org.apache.commons.lang3.RandomStringUtils
  */
-public class RandomStringUtilsTest {
+class RandomStringUtilsTest {
     @Test
-    public void random() {
+    void random() {
         //在指定字符串中生成长度为n的随机字符串,只包含数字
         System.out.println(RandomStringUtils.randomNumeric(5));
         //生成指定长度的随机字符串,只包含字母

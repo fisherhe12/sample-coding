@@ -1,7 +1,7 @@
 package com.github.fisherhe12.apache.commons.collections;
 
 import org.apache.commons.collections4.map.LRUMap;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * LruMap test case
@@ -10,7 +10,7 @@ import org.junit.Test;
  * @date 2018-01-25
  * @see org.apache.commons.collections4.map.LRUMap
  */
-public class LruMapTest {
+class LruMapTest {
 
     /**
      * 基于链表实现的LRUMAP
@@ -18,7 +18,7 @@ public class LruMapTest {
      * 超出容量外的元素,根据LRU原则进行移除
      */
     @Test
-    public void lruMap() {
+    void lruMap() {
         LRUMap<String, Integer> lruMap = new LRUMap<>(4);
         lruMap.putIfAbsent("fisher", 12);
         lruMap.putIfAbsent("jackson", 13);

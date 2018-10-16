@@ -1,7 +1,7 @@
 package com.github.fisherhe12.apache.commons.lang3;
 
 import org.apache.commons.lang3.Validate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Validate Test Case
@@ -9,11 +9,11 @@ import org.junit.Test;
  * @author fisher
  * @date 2018-01-25
  */
-public class ValidateTest {
+class ValidateTest {
 
-    @Test
-    public void validate() {
-        Validate.notEmpty(" ");
-        Validate.validIndex(new String[] {"123", "234", "345"}, 2);
-    }
+	@Test
+	void validate() {
+		Validate.notEmpty(" ");
+		Validate.validIndex(new String[]{"123", "234", "345"}, 2);
+	}
 }

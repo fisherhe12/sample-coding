@@ -3,7 +3,7 @@ package com.github.fisherhe12.common.domain;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
-import java.io.*;
+import java.io.Serializable;
 
 /**
  * @author fisher

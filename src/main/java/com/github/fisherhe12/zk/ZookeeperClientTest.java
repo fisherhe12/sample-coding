@@ -2,9 +2,9 @@ package com.github.fisherhe12.zk;
 
 import org.apache.zookeeper.*;
 import org.apache.zookeeper.data.Stat;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,15 +16,15 @@ import java.util.concurrent.TimeUnit;
  *
  * @author fisher
  */
-public class ZookeeperClientTest {
+class ZookeeperClientTest {
 
 	private static final String IP_ADDRESS = "172.18.8.20:2183";
 	private static ZooKeeper zooKeeper;
 	private static CountDownLatch connectedSemaphore = new CountDownLatch(1);
 	private static Stat stat = new Stat();
 
-	@Before
-	public void init() {
+	@BeforeEach
+	void init() {
 		try {
 			zooKeeper = new ZooKeeper(IP_ADDRESS, 50000, new InitWatcher());
 			System.out.println(zooKeeper.getState());
@@ -40,7 +40,7 @@ public class ZookeeperClientTest {
 	}
 
 	@Test
-	public void createSync() throws KeeperException, InterruptedException {
+	void createSync() throws KeeperException, InterruptedException {
 		// 创建瞬时的节点
 		String path = zooKeeper.create("/user", "fisher".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
 		System.out.println("Success create ephemeral zNode:" + path);
@@ -52,7 +52,7 @@ public class ZookeeperClientTest {
 	}
 
 	@Test
-	public void createAsync() throws InterruptedException {
+	void createAsync() throws InterruptedException {
 		zooKeeper.create("/user-", "fisher".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL,
 				(rc, path, ctx, name) -> System.out
 						.println("Create path result,rc:" + rc + ",path:" + path + ",ctx:" + ctx + ",name:" + name),
@@ -69,7 +69,7 @@ public class ZookeeperClientTest {
 	}
 
 	@Test
-	public void crud() throws KeeperException, InterruptedException {
+	void crud() throws KeeperException, InterruptedException {
 		zooKeeper.exists("/user", true);
 		zooKeeper.create("/user", "fisher".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
 		zooKeeper.setData("/user", "fisherhe".getBytes(), -1);
@@ -80,7 +80,7 @@ public class ZookeeperClientTest {
 	}
 
 	@Test
-	public void get() throws KeeperException, InterruptedException {
+	void get() throws KeeperException, InterruptedException {
 		zooKeeper.getChildren("/book", true, (rc, path, ctx, children, stat) -> {
 			System.out.println("Get children zNode result");
 			System.out.println("rc:" + rc);
@@ -96,7 +96,7 @@ public class ZookeeperClientTest {
 	}
 
 	@Test
-	public void auth() throws IOException, KeeperException, InterruptedException {
+	void auth() throws IOException, KeeperException, InterruptedException {
 		ZooKeeper zooKeeper1 = new ZooKeeper(IP_ADDRESS, 5000, null);
 
 		zooKeeper1.addAuthInfo("digest", "root:root".getBytes());
@@ -120,8 +120,8 @@ public class ZookeeperClientTest {
 		System.out.println("成功删除节点:/root");
 	}
 
-	@After
-	public void close() {
+	@AfterEach
+	void close() {
 		try {
 			zooKeeper.close();
 		} catch (InterruptedException e) {

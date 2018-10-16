@@ -1,6 +1,7 @@
 package com.github.fisherhe12.jdk.util.concurrent;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -12,9 +13,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
  *
  * @author fisher
  */
-public class CopyOnWriteArrayListTest {
+class CopyOnWriteArrayListTest {
 
-	public static void main(String[] args) throws InterruptedException {
+	static void main(String[] args) throws InterruptedException {
 		System.out.println("hello world");
 		ThreadGroup group = Thread.currentThread().getThreadGroup();
 		ThreadGroup topGroup = group;
@@ -32,7 +33,7 @@ public class CopyOnWriteArrayListTest {
 	}
 
 	@Test
-	public void create() {
+	void create() {
 		CopyOnWriteArrayList<Integer> numbers = new CopyOnWriteArrayList<>(new Integer[]{1, 3, 5, 8});
 		Iterator<Integer> iterator = numbers.iterator();
 		numbers.add(10);

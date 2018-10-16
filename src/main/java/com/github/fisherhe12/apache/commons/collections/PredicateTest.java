@@ -4,7 +4,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.functors.NotNullPredicate;
 import org.apache.commons.collections4.functors.NotPredicate;
 import org.apache.commons.collections4.functors.UniquePredicate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
@@ -14,50 +14,50 @@ import java.util.ArrayList;
  * @author fisher
  * @date 2018-01-25
  */
-public class PredicateTest {
+class PredicateTest {
 
-    /**
-     * 唯一性过滤
-     */
-    @Test
-    public void uniquePredicate() {
-        ArrayList<String> elements = new ArrayList<>();
-        elements.add("fisher");
-        elements.add("jack");
-        elements.add("jordan");
-        elements.add("jack");
-        CollectionUtils.filter(elements, UniquePredicate.uniquePredicate());
-        System.out.println(elements);
-    }
+	/**
+	 * 唯一性过滤
+	 */
+	@Test
+	void uniquePredicate() {
+		ArrayList<String> elements = new ArrayList<>();
+		elements.add("fisher");
+		elements.add("jack");
+		elements.add("jordan");
+		elements.add("jack");
+		CollectionUtils.filter(elements, UniquePredicate.uniquePredicate());
+		System.out.println(elements);
+	}
 
-    /**
-     * 排空过滤
-     */
-    @Test
-    public void notNullPredicate() {
-        ArrayList<String> elements = new ArrayList<>();
-        elements.add("fisher");
-        elements.add("");
-        elements.add("jordan");
-        elements.add(null);
+	/**
+	 * 排空过滤
+	 */
+	@Test
+	void notNullPredicate() {
+		ArrayList<String> elements = new ArrayList<>();
+		elements.add("fisher");
+		elements.add("");
+		elements.add("jordan");
+		elements.add(null);
 
-        CollectionUtils.filter(elements, NotNullPredicate.notNullPredicate());
-        System.out.println(elements);
-    }
+		CollectionUtils.filter(elements, NotNullPredicate.notNullPredicate());
+		System.out.println(elements);
+	}
 
-    /**
-     * 不包含过滤
-     */
-    @Test
-    public void notPredicate() {
+	/**
+	 * 不包含过滤
+	 */
+	@Test
+	void notPredicate() {
 
-        ArrayList<String> elements = new ArrayList<>();
-        elements.add("fisher");
-        elements.add("");
-        elements.add("jordan");
-        elements.add(null);
+		ArrayList<String> elements = new ArrayList<>();
+		elements.add("fisher");
+		elements.add("");
+		elements.add("jordan");
+		elements.add(null);
 
-        CollectionUtils.filter(elements, NotPredicate.notPredicate(n -> n == null || n.startsWith("f")));
-        System.out.println(elements);
-    }
+		CollectionUtils.filter(elements, NotPredicate.notPredicate(n -> n == null || n.startsWith("f")));
+		System.out.println(elements);
+	}
 }

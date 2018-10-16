@@ -1,6 +1,8 @@
 package com.github.fisherhe12.jdk.reference;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.lang.ref.PhantomReference;
 import java.lang.ref.ReferenceQueue;
@@ -9,7 +11,6 @@ import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-import static org.junit.Assert.*;
 
 /**
  * java强、弱、软、幻象引用的测试例子
@@ -17,24 +18,24 @@ import static org.junit.Assert.*;
  * @author fisher
  * @date 2018-09-29
  */
-public class ReferenceTest {
+class ReferenceTest {
 	/**
 	 * StrongReference 是 Java 的默认引用实现, 它会尽可能长时间的存活于 JVM 内， 当没有任何对象指向它时 GC 执行后将会被回收
 	 */
 	@Test
-	public void strongReference() {
+	void strongReference() {
 		Object referent = new Object();
 
 		// 通过赋值创建 StrongReference
 		Object strongReference = referent;
 
-		assertSame(referent, strongReference);
+		Assertions.assertSame(referent, strongReference);
 
 		referent = null;
 		System.gc();
 
 		// StrongReference 在 GC 后不会被回收
-		assertNotNull(strongReference);
+		Assertions.assertNotNull(strongReference);
 
 	}
 
@@ -42,30 +43,30 @@ public class ReferenceTest {
 	 * 弱引用，当所引用的对象在jvn内不再有强引用时,GC后将会被自动回收
 	 */
 	@Test
-	public void weakReference() {
+	void weakReference() {
 		Object referent = new Object();
 		WeakReference<Object> weakReference = new WeakReference<>(referent);
 
-		assertSame(referent, weakReference.get());
+		Assertions.assertSame(referent, weakReference.get());
 
 		referent = null;
 		System.gc();
 
 		//一旦没有指向 referent 的强引用, weak reference 在 GC 后会被自动回收
-		assertNull(weakReference.get());
+		Assertions.assertNull(weakReference.get());
 	}
 
 	/**
 	 * WeakHashMap 使用 WeakReference 作为 key， 一旦没有指向 key 的强引用, WeakHashMap 在 GC 后将自动删除相关的 entry
 	 */
 	@Test
-	public void weakHashMap() throws InterruptedException {
+	void weakHashMap() throws InterruptedException {
 		Map<Object, Object> weakHashMap = new WeakHashMap<>();
 		Object key = new Object();
 		Object value = new Object();
 		weakHashMap.put(key, value);
 
-		assertTrue(weakHashMap.containsValue(value));
+		Assertions.assertTrue(weakHashMap.containsValue(value));
 
 		key = null;
 		System.gc();
@@ -78,24 +79,24 @@ public class ReferenceTest {
 		/**
 		 * 一旦没有指向 key 的强引用, WeakHashMap 在 GC 后将自动删除相关的 entry
 		 */
-		assertFalse(weakHashMap.containsValue(value));
+		Assertions.assertFalse(weakHashMap.containsValue(value));
 	}
 
 	/**
 	 * SoftReference 于 WeakReference 的特性基本一致， 最大的区别在于 SoftReference 会尽可能长的保留引用直到 JVM 内存不足时才会被回收(虚拟机保证), 这一特性使得 SoftReference 非常适合缓存应用
 	 */
 	@Test
-	public void softReference() {
+	void softReference() {
 		Object referent = new Object();
 		SoftReference<Object> softRerference = new SoftReference<>(referent);
 
-		assertNotNull(softRerference.get());
+		Assertions.assertNotNull(softRerference.get());
 
 		referent = null;
 		System.gc();
 
 		// soft references 只有在 jvm OutOfMemory 之前才会被回收, 所以它非常适合缓存应用
-		assertNotNull(softRerference.get());
+		Assertions.assertNotNull(softRerference.get());
 	}
 
 	/**
@@ -103,12 +104,12 @@ public class ReferenceTest {
 	 * 其二， 它可以避免 finalization 带来的一些根本性问题, 上文提到 PhantomReference 的唯一作用就是跟踪 referent 何时被 enqueue 到 ReferenceQueue
 	 */
 	@Test
-	public void phantomReferenceAlwaysNull() {
+	void phantomReferenceAlwaysNull() {
 		Object referent = new Object();
 		PhantomReference<Object> phantomReference = new PhantomReference<>(referent, new ReferenceQueue<>());
 
 		// phantom reference 的 get 方法永远返回 null
-		assertNull(phantomReference.get());
+		Assertions.assertNull(phantomReference.get());
 	}
 
 }

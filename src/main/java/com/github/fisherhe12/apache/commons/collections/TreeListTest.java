@@ -1,7 +1,7 @@
 package com.github.fisherhe12.apache.commons.collections;
 
 import org.apache.commons.collections4.list.TreeList;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
@@ -22,7 +22,7 @@ public class TreeListTest {
      * LinkedList  5800    1     350       2     325
      */
     @Test
-    public void treeList() {
+    void treeList() {
         ArrayList<String> arrayList = new ArrayList<>();
         TreeList<String> treeList = new TreeList<>();
         long start = System.currentTimeMillis();
