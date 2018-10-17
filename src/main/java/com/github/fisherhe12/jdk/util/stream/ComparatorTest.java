@@ -1,4 +1,4 @@
-package com.github.fisherhe12.jdk.list;
+package com.github.fisherhe12.jdk.util.stream;
 
 import com.github.fisherhe12.common.domain.PersonDTO;
 import com.google.common.collect.Lists;

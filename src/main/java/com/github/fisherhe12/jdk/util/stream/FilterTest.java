@@ -1,4 +1,4 @@
-package com.github.fisherhe12.jdk.list;
+package com.github.fisherhe12.jdk.util.stream;
 
 import com.github.fisherhe12.common.domain.PersonDTO;
 import org.apache.commons.lang3.StringUtils;
@@ -18,12 +18,13 @@ class FilterTest {
 
 	/**
 	 * filter过滤和collect合并结果集示例
-	 * 匹配集合元素
+	 * 匹配不为'node'元素且不为空的元素
 	 */
 	@Test
 	void filterList() {
-		List<String> lines = Arrays.asList("spring", "node", "java");
-		List<String> resultList = lines.stream().filter(line -> !StringUtils.equals("node", line))
+		List<String> lines = Arrays.asList("spring", "node", "java", null, null);
+		List<String> resultList = lines.stream()
+				.filter(line -> StringUtils.isNotEmpty(line) && !StringUtils.equals("node", line))
 				.collect(Collectors.toList());
 		resultList.forEach(System.out::println);
 	}

@@ -37,7 +37,7 @@ public class TreeListTest {
         }
         long end = System.currentTimeMillis();
         long elapsed = (end - start) / 1000;
-        System.out.println(" tree list elapsed time:" + elapsed + "s");
+        System.out.println(" tree stream elapsed time:" + elapsed + "s");
 
         start = System.currentTimeMillis();
         for (int i = 0; i < 10000; i++) {
@@ -51,6 +51,6 @@ public class TreeListTest {
         }
         end = System.currentTimeMillis();
         elapsed = (end - start) / 1000;
-        System.out.println(" array list elapsed time:" + elapsed + "s");
+        System.out.println(" array stream elapsed time:" + elapsed + "s");
     }
 }
