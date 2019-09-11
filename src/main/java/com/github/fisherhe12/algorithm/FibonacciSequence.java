@@ -55,7 +55,7 @@ public class FibonacciSequence {
      */
     private static int fibonacciByLoop(int n) {
         if (n < 1) {
-            return -1;
+            return 0;
         }
         if (n == 1 || n == 2) {
             return 1;
@@ -77,7 +77,7 @@ public class FibonacciSequence {
      */
     private static int fibonacciByArray(int n) {
         if (n < 1) {
-            return -1;
+            return 0;
         }
         int[] array = new int[n];
 
