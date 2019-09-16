@@ -1,5 +1,9 @@
 package com.github.fisherhe12.algorithm;
 
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.PriorityQueue;
 
 /**
@@ -16,7 +20,7 @@ public class SlidingWindowMaximum {
 
     public int[] maxSlidingWindow(int[] nums, int k) {
 
-        if (k <= 0 || nums == null || nums.length == 0) {
+        if (k < 1 || nums == null || nums.length == 0) {
             return new int[0];
         }
 
@@ -36,6 +40,49 @@ public class SlidingWindowMaximum {
             endIndex++;
         }
         return array;
+    }
+
+    public int[] maxSlidingWindow2(int[] nums, int k) {
+
+        if (k < 1 || nums == null || nums.length == 0) {
+            return new int[0];
+        }
+        List<Integer> list = new ArrayList<>();
+
+        //双端队列记录最大值下标
+        Deque<Integer> deque = new LinkedList<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            //队列不为空，当往后一个数，就会把它的下标放进队列里，从后往前比较，如果队列里的下标对应的数不如它
+            //大，就弹出，
+            while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {
+                deque.pollLast();
+            }
+            deque.addLast(i);
+            //判断队首元素是否过期，==是因为它每一次移动都会判定，所以==或者<=都是一样的
+            if (deque.peekFirst() == i - k) {
+                deque.pollFirst();
+            }
+            //==是正好形成了第一个滑动窗口，以后每右移一次就添加一个最大数
+            if (i >= k - 1) {
+                list.add(nums[deque.peekFirst()]);
+            }
+        }
+        int[] array = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            array[i] = list.get(i);
+        }
+        return array;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = new int[]{8, 3, -1, 3, 5, 2, 6};
+        int k = 3;
+        SlidingWindowMaximum slidingWindowMaximum = new SlidingWindowMaximum();
+        int[] ints = slidingWindowMaximum.maxSlidingWindow2(nums, k);
+        for (int anInt : ints) {
+            System.out.println(anInt);
+        }
     }
 
 }
