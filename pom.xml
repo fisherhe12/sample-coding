@@ -21,6 +21,7 @@
         <curator.version>4.0.1</curator.version>
         <jedis.version>2.9.0</jedis.version>
         <assertj-core.version>3.11.1</assertj-core.version>
+        <netty-all.version>4.1.47.Final</netty-all.version>
     </properties>
 
     <dependencies>
@@ -82,6 +83,11 @@
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>${assertj-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>${netty-all.version}</version>
         </dependency>
     </dependencies>
 
