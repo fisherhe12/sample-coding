@@ -89,6 +89,13 @@
             <artifactId>netty-all</artifactId>
             <version>${netty-all.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok-maven-plugin</artifactId>
+            <version>1.18.12.0</version>
+            <type>maven-plugin</type>
+    </dependency>
     </dependencies>
 
     <build>
