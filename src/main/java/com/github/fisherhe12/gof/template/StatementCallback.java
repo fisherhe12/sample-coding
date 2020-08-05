@@ -5,6 +5,10 @@ package com.github.fisherhe12.gof.template;
  *
  * @author Fisher.He
  */
-public class StatementCallback {
+public interface StatementCallback<T> {
 
+    /**
+     *  callback method
+     */
+    T doInStatement();
 }
