@@ -1,10 +1,9 @@
 package com.github.fisherhe12.gof.metric;
 
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * com.github.fisherhe12.gof.metric
@@ -12,35 +11,44 @@ import java.util.concurrent.TimeUnit;
  * @author fisher
  * @date 2020-03-29
  */
-public class ConsoleReporter {
-	private MetricsStorage metricsStorage;
-	private ScheduledExecutorService executor;
-	private Aggregator aggregator;
+public class ConsoleReporter extends ScheduleReporter {
 
-	public ConsoleReporter(MetricsStorage metricsStorage, Aggregator aggregator) {
-		this.metricsStorage = metricsStorage;
-		this.executor = Executors.newSingleThreadScheduledExecutor();
-		this.aggregator = aggregator;
-	}
+    private static final Long DAY_HOURS_IN_SECONDS = 86400L;
+
+    public ConsoleReporter(MetricsStorage metricsStorage,
+                           Aggregator aggregator,
+                           StatViewer viewer) {
+        super(metricsStorage, aggregator, viewer);
+    }
 
 
-	public void startRepeatedReport(long periodInSeconds, long durationInSeconds) {
-		executor.scheduleAtFixedRate(new Runnable() {
-			@Override
-			public void run() {
+    public void startDailyReport() {
+        Date firstTime = trimTimeFieldsToZeroOfNextDay(new Date());
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                long durationMillis = DAY_HOURS_IN_SECONDS * 1000;
+                long endTimeMillis = System.currentTimeMillis();
+                long startTimeMillis = endTimeMillis - durationMillis;
+                doStatAndReport(startTimeMillis, endTimeMillis);
+            }
+        }, firstTime, DAY_HOURS_IN_SECONDS);
+    }
 
-				long durationInMillis = durationInSeconds * 1000;
-				long endTimeInMillis = System.currentTimeMillis();
-				long startTimeInMillis = endTimeInMillis - durationInMillis;
+    private Date trimTimeFieldsToZeroOfNextDay(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
+    }
 
-				Map<String, List<RequestInfo>> requestInfos = metricsStorage
-						.getRequestInfos(startTimeInMillis, endTimeInMillis);
+    public static void main(String[] args) {
+    }
 
-				Map<String, RequestStat> requestStats = aggregator.aggregate(requestInfos, durationInMillis);
-
-				System.out.println("Time Span: [" + startTimeInMillis + ", " + endTimeInMillis);
-			}
-		}, 0, periodInSeconds, TimeUnit.SECONDS);
-	}
 }
 
