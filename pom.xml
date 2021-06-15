@@ -22,7 +22,7 @@
         <jedis.version>2.9.0</jedis.version>
         <assertj-core.version>3.11.1</assertj-core.version>
         <netty-all.version>4.1.47.Final</netty-all.version>
-        <httpclient.version>4.5.12</httpclient.version>
+        <httpclient.version>4.5.13</httpclient.version>
     </properties>
 
     <dependencies>
