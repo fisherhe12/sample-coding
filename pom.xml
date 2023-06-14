@@ -11,7 +11,7 @@
     <description>This repository contains many kinds of useful coding sample.</description>
 
     <properties>
-        <guava.version>29.0-jre</guava.version>
+        <guava.version>32.0.0-jre</guava.version>
         <commons-lang3.version>3.5</commons-lang3.version>
         <junit.jupiter.version>5.3.1</junit.jupiter.version>
         <java.version>1.8</java.version>
